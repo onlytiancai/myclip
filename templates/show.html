@@ -5,12 +5,9 @@ $var title: $clip.title
     <li><a href="/">首页</a></li>
     <li class="active">$clip.title</li>
 </ol>
-<div class="btn-group">
+<div class="btn-group" style="margin-bottom: 15px;">
     <a class="btn btn-default" href="/edit/$clip.id"><span class="glyphicon glyphicon-edit"></span> 修改</a>
     <a class="btn btn-default" href="/delete/$clip.id"><span class="glyphicon glyphicon-trash"></span> 删除</a>
+    <a class="btn btn-default" href="/historylist/$clip.id"><span class="glyphicon glyphicon-list"></span> 历史</a>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        $clip.content
-    </div>
-</div>
+<pre>$clip.content</pre>
