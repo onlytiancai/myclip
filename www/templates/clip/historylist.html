@@ -11,7 +11,7 @@ $for group in group_clips:
     <p>$group</p>
     <ul>
     $for row in group_clips[group]:
-        <li><a href="/historyshow/$clip.id/$row.id">$row.created_time</a> </li>
+        <li><a href="/historyshow/$clip.id/$row.id">$row.title - $row.created_time</a> </li>
     </ul>
 <ul class="pager">
     <li class="previous"><a href="?page=${page - 1}">前一页</a></li>
