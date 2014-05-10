@@ -10,3 +10,15 @@ CREATE TABLE `clips` (
   PRIMARY KEY  (`id`)
 );
 
+create table users (
+    id int auto_increment not null primary key,
+    username varchar(32) not null,
+    nickname varchar(32) not null,
+    password varchar(32) not null,
+    salt int not null,
+    usertype tinyint not null,
+    openid varchar(64) not null,
+    created_time datetime not null,
+    unique key(username),
+    key(openid)
+);
