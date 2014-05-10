@@ -8,32 +8,46 @@ import settings
 db = web.database(**settings.DB_CONN)
 
 
-def create_user(username, password, usertype=0):
+def _gen_salt():
+    return str(random.randint(1, 1024 * 1024))
+
+
+def _gen_password(password, salt=None):
+    password = password + str(salt)
+    return md5(password).hexdigest().upper()
+
+
+def create_user(username, password, clientip='0.0.0.0', usertype=0):
     username = username.lower()
     if exists_user(username):
         raise web.conflict()
+    salt = _gen_salt()
+    password = _gen_password(password, salt)
+    now = web.SQLLiteral("NOW()")
 
-    salt = str(random.randint(1, 1024 * 1024))
-    password = password + salt
-    password = md5(password).hexdigest().upper()
     db.insert('users', username=username, password=password, salt=salt,
-              usertype=usertype, created_time=web.SQLLiteral("NOW()"),
-              nickname=username, openid='')
+              usertype=usertype, nickname=username, openid='',
+              register_time=now, register_ip=clientip,
+              lastlogin_time=now, lastlogin_ip=clientip)
      
 
 def change_password(username, password):
-    user = get_user_by_username(username)
-    password = password + str(user.salt)
-    password = md5(password).hexdigest().upper()
+    salt = _gen_salt()
+    password = _gen_password(password, salt)
     db.update('users', where='username=$username', vars={'username': username},
-              password=password)
+              password=password, salt=salt)
 
 
-def verify_password(username, password):
+def verify_password(username, password, clientip='0.0.0.0'):
     user = get_user_by_username(username)
-    password = password + str(user.salt)
-    password = md5(password).hexdigest().upper()
-    return password == user.password
+    password = _gen_password(password, user.salt)
+    if password == user.password:
+        now = web.SQLLiteral("NOW()")
+        db.update('users', where='username=$username', vars={'username': username},
+                  lastlogin_time=now, lastlogin_ip=clientip)
+        return True
+    else:
+        return False
 
 
 def get_user_by_username(username):
@@ -50,7 +64,8 @@ def exists_user(username):
     return bool(rows)
 
 # ======================test cases =================
-# nosetests users.py -s --with-cov --cover-package=users
+# nosetests users.py -s --with-cov
+
 
 def test_create_user():
     db.delete('users', where="username='test_user'")

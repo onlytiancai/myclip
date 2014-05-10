@@ -18,7 +18,12 @@ create table users (
     salt int not null,
     usertype tinyint not null,
     openid varchar(64) not null,
-    created_time datetime not null,
+    register_time datetime not null,
+    register_ip varchar(16) not null,
+    lastlogin_time datetime not null,
+    lastlogin_ip varchar(16) not null,
     unique key(username),
-    key(openid)
+    key(openid),
+    key(register_time),
+    key(lastlogin_time)
 );
