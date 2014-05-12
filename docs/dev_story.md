@@ -1,4 +1,4 @@
-### 2014-05-05
+### 2014-05-11
 
 从今天开始写下开发故事，呵呵。
 
@@ -115,3 +115,13 @@ utils就麻烦了，得`sys.path.append('..')`, 或者`from .. import utils`,或
 1. make run 启动应用
 
 当然安装Python, pip, 配置Gunicorn,nginx等就是使用者自己折腾下的事了，囧。
+
+
+### 2014-05-12
+
+userid小于10的用于测试，不表示真实数据，可以随时删除。
+
+tests目录下的测试用例需要使用www下的类，直接用sys.path.append('www/')，执行测试用时
+只能在根目录下用nosetests tests, 而不能在tests目录下nostests ./，这是因为www目录下
+的代码还有一些doctest要测试，所以在根目录下只要一句
+`nosetests www/ tests/ --with-doctest`就可以完整测试整个项目了。

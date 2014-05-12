@@ -1,13 +1,14 @@
 CREATE DATABASE `myclip` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-CREATE TABLE `clips` (
-  `id` int(11) NOT NULL auto_increment,
-  `pid` int(11) NOT NULL default '0',
-  `title` varchar(20) default NULL,
-  `content` text,
-  `created_time` datetime default NULL,
-  `changed_time` datetime default NULL,
-  PRIMARY KEY  (`id`)
+CREATE TABLE clips2 (
+    id int auto_increment not null primary key,
+    pid int not null,
+    title varchar(32) not null,
+    `content` text not null,
+    created_time datetime not null,
+    changed_time datetime not null,
+    key(pid),
+    key(title)
 );
 
 create table users (
@@ -26,4 +27,26 @@ create table users (
     key(openid),
     key(register_time),
     key(lastlogin_time)
+);
+
+create table messages(
+    id int auto_increment not null primary key,
+    from_userid int not null,
+    to_userid int not null,
+    created_time datetime not null,
+    `content` varchar(2048) not null,
+    msgtype tinyint not null,
+    unread tinyint(1) not null default 1,
+    key(from_userid),
+    key(to_userid)
+);
+
+create table twitters(
+    id int auto_increment not null primary key,
+    pid int not null,
+    userid int not null,
+    created_time datetime not null,
+    `content` varchar(512) not null,
+    deleted tinyint(1) not null,
+    key(userid)
 );

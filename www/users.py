@@ -62,37 +62,3 @@ def exists_user(username):
     rows = db.select('users', where="username=$username",
                      vars={'username': username})
     return bool(rows)
-
-# ======================test cases =================
-# nosetests users.py -s --with-cov
-
-
-def test_create_user():
-    db.delete('users', where="username='test_user'")
-    create_user('test_user', '123456')
-
-
-def test_create_user_conflict():
-    db.delete('users', where="username='test_user'")
-    create_user('test_user', '123456')
-    conflict = False
-    try:
-        create_user('test_user', '123456')
-    except web.conflict:
-        conflict = True
-    assert conflict
-
-
-def test_verify_password():
-    db.delete('users', where="username='test_user'")
-    create_user('test_user', '123456')
-    assert verify_password('test_user', '123456')
-    assert not verify_password('test_user', '654321')
-
-
-def test_change_password():
-    db.delete('users', where="username='test_user'")
-    create_user('test_user', '123456')
-    assert verify_password('test_user', '123456')
-    change_password('test_user', '654321')
-    assert verify_password('test_user', '654321')

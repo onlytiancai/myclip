@@ -24,7 +24,7 @@ def filter_input_loadhook():
     i = web.input()
     # 请求太大，直接返回http 400
     for k in i:
-        if len(i[k]) > 10240:
+        if len(i[k]) > 102400:
             raise web.badrequest('request to large.')
 
 

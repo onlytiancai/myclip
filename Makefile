@@ -11,3 +11,6 @@ run:
 
 rundev:
 	cd www/ && python application.py 8888
+
+test:
+	nosetests tests/ www/ --with-cov --with-doctest -v -s
