@@ -6,13 +6,17 @@ import clip_app
 
 
 urls = ["/", clip_app.Index,
-        "/new", clip_app.New,
+        "/new/(\d+)", clip_app.New,
         "/show/(\d+)", clip_app.Show,
         "/edit/(\d+)", clip_app.Edit,
         "/delete/(\d+)", clip_app.Delete,
         "/showerror", clip_app.ShowError,
         "/historylist/(\d+)", clip_app.HistoryList,
         "/historyshow/(\d+)/(\d+)", clip_app.HistoryShow,
+        "/cates", clip_app.CatesHandler,
+        "/cate/(\d+)", clip_app.CateHandler,
+        "/create_cate", clip_app.CreateCateHandler,
+        "/create_cate/(\d+)", clip_app.CreateCateHandler,
         ]
 
 

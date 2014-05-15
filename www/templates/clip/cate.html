@@ -1,0 +1,30 @@
+$def with(cate, clips)
+$var title: $cate.name 的文档
+
+<ol class="breadcrumb">
+    <li><a href="/">首页</a></li>
+    <li class="active">$cate.name 的文档</li>
+</ol>
+
+
+<div class="btn-group btn-group-sm">
+    <a class="btn btn-primary" href="/new/$cate.id"><span class="glyphicon glyphicon-plus"></span> 新建剪贴板</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>标题</th>
+            <th width="200">修改时间</th>
+        </tr>
+    </thead>
+    <tbody>
+        $for clip in clips:
+        <tr>
+            <td><a href="/show/$clip.id">$clip.title</a></td>
+            <td>$clip.created_time</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+

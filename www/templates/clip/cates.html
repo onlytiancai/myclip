@@ -1,8 +1,7 @@
 $def with(cates)
-$var title: 对，我就是剪贴板 
-
+$var title: 剪贴板分类 
 <div class="btn-group">
-    <a class="btn btn-primary" href="/create_cate"><span class="glyphicon glyphicon-plus"></span> 创建大类</a>
+    <a class="btn btn-primary btn-xs" href="/create_cate">创建大类</a>
 </div>
 $for cate in cates:
     <h3>$cate.name</h3>
@@ -11,7 +10,3 @@ $for cate in cates:
         <li><a href="/cate/$subcate.id">$subcate.name</a></li>
     <li><a class="btn btn-default btn-xs" href="/create_cate/$cate.id">创建子类</a> </li>
     </ul>
-<h3>其它分类</h3>
-<ul class="list-inline">
-    <li><a href="/cate/0">其它</a></li>
-</ul>

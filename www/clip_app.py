@@ -12,27 +12,28 @@ render = utils.render.clip
 
 class Index(object):
     def GET(self):
-        clips = db.select('clips', order="changed_time desc", where="pid = 0")
-        return render.index(clips)
+        cates = get_cates()
+        return render.index(cates)
 
 
 class New(object):
-    def GET(self):
+    def GET(self, cateid=0):
         return render.new()
 
-    def POST(self):
+    def POST(self, cateid=0):
         i = web.input()
-        new_id = db.insert('clips', title=i.title, content=i.content,
+        new_id = db.insert('clips', title=i.title, content=i.content,cateid=cateid,
                            created_time=datetime.now(), changed_time=datetime.now())
-        db.insert('clips', pid=new_id, title=i.title, content=i.content,
+        db.insert('clips', pid=new_id, title=i.title, content=i.content,cateid=cateid,
                   created_time=datetime.now(), changed_time=datetime.now())
-        return web.seeother('/')
+        return web.seeother('/cate/%s' % cateid)
 
 
 class Show(object):
     def GET(self, id):
-        clip = db.select('clips', where='id=$id', vars=locals())
-        return render.show(clip[0])
+        clip = db.select('clips', where='id=$id', vars=locals())[0]
+        cate = get_cate(clip.cateid)
+        return render.show(cate, clip)
 
 
 class Edit(object):
@@ -87,3 +88,49 @@ class HistoryShow(object):
         pclip = db.select('clips', where='id=$pid', vars=dict(pid=pid))
         clip = db.select('clips', where='id=$id', vars=dict(id=id))
         return render.historyshow(pclip[0], clip[0])
+
+
+def get_cates():
+    cates = [] 
+    rows = db.select('clip_cate', where='pid=0')
+    for row in rows:
+        cate = web.storage(row)
+        cate.subcates = db.select('clip_cate', where='pid=$pid',
+                                  vars=dict(pid=cate.id))
+        cates.append(cate)
+    return cates
+
+
+def get_cate(id):
+    if int(id) == 0:
+        return web.storage(id=0, name=u'其它')
+    cate = db.select('clip_cate', where='id=$id', vars=dict(id=id))
+    return cate[0]
+
+
+def get_clips(cateid=0):
+    rows = db.select('clips', where='cateid=$cateid and pid=0',
+                     vars=dict(cateid=cateid))
+    return rows
+
+
+class CatesHandler(object):
+    def GET(self):
+        cates = get_cates()
+        return render.cates(cates)
+
+
+class CateHandler(object):
+    def GET(self, cateid):
+        cate = get_cate(cateid)
+        return render.cate(cate, get_clips(cateid))
+        
+
+class CreateCateHandler(object):
+    def GET(self, pid=0):
+        return render.create_cate()
+
+    def POST(self, pid=0):
+        i = web.input()
+        db.insert('clip_cate', pid=pid, name=i.catename, created_time=datetime.now())
+        return web.seeother('/cates')

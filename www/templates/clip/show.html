@@ -1,8 +1,9 @@
-$def with(clip)
+$def with(cate, clip)
 $var title: $clip.title
 
 <ol class="breadcrumb">
     <li><a href="/">首页</a></li>
+    <li><a href="/cate/$cate.id">$cate.name</a></li>
     <li class="active">$clip.title</li>
 </ol>
 <div class="btn-group" style="margin-bottom: 15px;">
