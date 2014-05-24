@@ -2,21 +2,21 @@
 import web
 
 import utils
-import clip_app 
+import clips 
 
 
-urls = ["/", clip_app.Index,
-        "/new/(\d+)", clip_app.New,
-        "/show/(\d+)", clip_app.Show,
-        "/edit/(\d+)", clip_app.Edit,
-        "/delete/(\d+)", clip_app.Delete,
-        "/showerror", clip_app.ShowError,
-        "/historylist/(\d+)", clip_app.HistoryList,
-        "/historyshow/(\d+)/(\d+)", clip_app.HistoryShow,
-        "/cates", clip_app.CatesHandler,
-        "/cate/(\d+)", clip_app.CateHandler,
-        "/create_cate", clip_app.CreateCateHandler,
-        "/create_cate/(\d+)", clip_app.CreateCateHandler,
+urls = ["/", clips.IndexHandler,
+        "/new/(\d+)", clips.NewHandler,
+        "/show/(\d+)", clips.ShowHandler,
+        "/edit/(\d+)", clips.EditHandler,
+        "/delete/(\d+)", clips.DeleteHandler,
+        "/showerror", clips.ShowErrorHandler,
+        "/historylist/(\d+)", clips.HistoryListHandler,
+        "/historyshow/(\d+)/(\d+)", clips.HistoryShowHandler,
+        "/cates", clips.CatesHandler,
+        "/cate/(\d+)", clips.CateHandler,
+        "/create_cate", clips.CreateCateHandler,
+        "/create_cate/(\d+)", clips.CreateCateHandler,
         ]
 
 
