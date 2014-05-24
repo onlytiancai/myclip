@@ -1,8 +1,10 @@
 $def with(clip)
 $var title: 确认删除 $clip.title
 
-<form class="form-horizontal" role="form" method="post" active="">
-    <p>您真的要删除$clip.title吗？</p>
-    <button type="submit" class="btn btn-default">确认</button>
-    <a class="btn btn-default" href="/show/$clip.id">取消</a>
-</form>
+<div class="container">
+    <form class="form-horizontal" role="form" method="post" active="">
+        <p>您真的要删除$clip.title吗？</p>
+        <button type="submit" class="btn btn-default">确认</button>
+        <a class="btn btn-default" href="/clips/show/$clip.id">取消</a>
+    </form>
+</div>

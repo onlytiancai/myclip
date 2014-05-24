@@ -1,0 +1,41 @@
+/* Sticky footer styles
+ * -------------------------------------------------- */
+
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+#wrap > .container {
+    padding-top:60px;
+}
+.my-jumbotron{
+    height:350px;
+    padding-top: 80px;
+    color: white;
+    background: url(/static/img/bg-pattern.jpg) 89% 70% repeat;
+    background-color: #488FC5;
+    background-size: 640px 640px;
+}
+.my-footer{
+    clear: both;
+    color: #C2C2C2;
+    line-height: 1.5em;
+    height:60px;
+    background: #222;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.my-footer .text-muted {
+    margin: 20px 0;
+}

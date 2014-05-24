@@ -2,19 +2,20 @@ $def with(clip, group_clips, page)
 $var title: $clip.title
 
 
-<ol class="breadcrumb">
-    <li><a href="/">首页</a></li>
-    <li><a href="/show/$clip.id">$clip.title</a></li>
-    <li class="active">历史列表</li>
-</ol>
-$for group in group_clips:
-    <p>$group</p>
-    <ul>
-    $for row in group_clips[group]:
-        <li><a href="/historyshow/$clip.id/$row.id">$row.title - $row.created_time</a> </li>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/clips/show/$clip.id">$clip.title</a></li>
+        <li class="active">历史列表</li>
+    </ol>
+    $for group in group_clips:
+        <p>$group</p>
+        <ul>
+        $for row in group_clips[group]:
+            <li><a href="/clips/historyshow/$clip.id/$row.id">$row.title - $row.created_time</a> </li>
+        </ul>
+    <ul class="pager">
+        <li class="previous"><a href="?page=${page - 1}">前一页</a></li>
+        <li class="next"><a href="?page=${page + 1}">后一页</a></li>
     </ul>
-<ul class="pager">
-    <li class="previous"><a href="?page=${page - 1}">前一页</a></li>
-    <li class="next"><a href="?page=${page + 1}">后一页</a></li>
-</ul>
-
+</div>

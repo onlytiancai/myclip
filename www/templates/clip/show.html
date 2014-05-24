@@ -1,14 +1,16 @@
 $def with(cate, clip)
 $var title: $clip.title
 
-<ol class="breadcrumb">
-    <li><a href="/">首页</a></li>
-    <li><a href="/cate/$cate.id">$cate.name</a></li>
-    <li class="active">$clip.title</li>
-</ol>
-<div class="btn-group" style="margin-bottom: 15px;">
-    <a class="btn btn-default" href="/edit/$clip.id"><span class="glyphicon glyphicon-edit"></span> 修改</a>
-    <a class="btn btn-default" href="/delete/$clip.id"><span class="glyphicon glyphicon-trash"></span> 删除</a>
-    <a class="btn btn-default" href="/historylist/$clip.id"><span class="glyphicon glyphicon-list"></span> 历史</a>
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/clips/cate/$cate.id">$cate.name</a></li>
+        <li class="active">$clip.title</li>
+    </ol>
+    <div class="btn-group" style="margin-bottom: 15px;">
+        <a class="btn btn-default" href="/clips/edit/$clip.id"><span class="glyphicon glyphicon-edit"></span> 修改</a>
+        <a class="btn btn-default" href="/clips/delete/$clip.id"><span class="glyphicon glyphicon-trash"></span> 删除</a>
+        <a class="btn btn-default" href="/clips/historylist/$clip.id"><span class="glyphicon glyphicon-list"></span> 历史</a>
+    </div>
+    <pre>$clip.content</pre>
 </div>
-<pre>$clip.content</pre>

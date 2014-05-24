@@ -1,17 +1,19 @@
 $def with(cates)
 $var title: 对，我就是剪贴板 
 
-<div class="btn-group">
-    <a class="btn btn-primary" href="/create_cate"><span class="glyphicon glyphicon-plus"></span> 创建大类</a>
-</div>
-$for cate in cates:
+<div class="container">
+    <div class="btn-group">
+        <a class="btn btn-primary" href="/clips/create_cate"><span class="glyphicon glyphicon-plus"></span> 创建大类</a>
+    </div>
+    $for cate in cates:
     <h3>$cate.name</h3>
     <ul class="list-inline">
-    $for subcate in cate.subcates:
-        <li><a href="/cate/$subcate.id">$subcate.name</a></li>
-    <li><a class="btn btn-default btn-xs" href="/create_cate/$cate.id">创建子类</a> </li>
+        $for subcate in cate.subcates:
+            <li><a href="/clips/cate/$subcate.id">$subcate.name</a></li>
+        <li><a class="btn btn-default btn-xs" href="/clips/create_cate/$cate.id">创建子类</a> </li>
     </ul>
-<h3>其它分类</h3>
-<ul class="list-inline">
-    <li><a href="/cate/0">其它</a></li>
-</ul>
+    <h3>其它分类</h3>
+    <ul class="list-inline">
+        <li><a href="/clips/cate/0">其它</a></li>
+    </ul>
+</div>

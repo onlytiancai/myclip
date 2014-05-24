@@ -2,21 +2,19 @@
 import web
 
 import utils
-import clips 
+import clips
 
 
-urls = ["/", clips.IndexHandler,
-        "/new/(\d+)", clips.NewHandler,
-        "/show/(\d+)", clips.ShowHandler,
-        "/edit/(\d+)", clips.EditHandler,
-        "/delete/(\d+)", clips.DeleteHandler,
-        "/showerror", clips.ShowErrorHandler,
-        "/historylist/(\d+)", clips.HistoryListHandler,
-        "/historyshow/(\d+)/(\d+)", clips.HistoryShowHandler,
-        "/cates", clips.CatesHandler,
-        "/cate/(\d+)", clips.CateHandler,
-        "/create_cate", clips.CreateCateHandler,
-        "/create_cate/(\d+)", clips.CreateCateHandler,
+render = utils.render
+
+
+class IndexHandler(object):
+    def GET(self):
+        return render.index()
+
+
+urls = ["/", IndexHandler,
+        "/clips", clips.app,
         ]
 
 
