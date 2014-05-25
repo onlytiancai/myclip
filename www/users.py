@@ -4,8 +4,10 @@ import random
 from hashlib import md5
 
 import settings
+import utils
 
 db = web.database(**settings.DB_CONN)
+render = utils.render.users
 
 
 def _gen_salt():
@@ -62,3 +64,36 @@ def exists_user(username):
     rows = db.select('users', where="username=$username",
                      vars={'username': username})
     return bool(rows)
+
+
+class IndexHandler(object):
+    pass
+
+
+class LoginHandler(object):
+    pass
+
+
+class RegisterHandler(object):
+    def GET(self):
+        return render.register()
+
+    def POST(self):
+        i = web.input()
+        clientip = utils.get_clientip()
+
+        if not utils.password_strength(i.login_password):
+            return utils.show_error(u'密码强度太弱')
+
+
+        create_user(i.login_email, i.login_password, clientip)
+        return web.seeother('/register_successful')
+
+
+urls = ["/", IndexHandler,
+        "/login", LoginHandler,
+        "/register", RegisterHandler,
+        ]
+
+
+app = web.application(urls, globals())

@@ -3,6 +3,7 @@ import web
 
 import utils
 import clips
+import users
 
 
 render = utils.render
@@ -15,6 +16,7 @@ class IndexHandler(object):
 
 urls = ["/", IndexHandler,
         "/clips", clips.app,
+        "/users", users.app,
         ]
 
 

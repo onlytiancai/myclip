@@ -39,3 +39,29 @@ body {
 .my-footer .text-muted {
     margin: 20px 0;
 }
+
+/* begin 登录注册相关*/
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  margin: 5px 0;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+/* end 登录注册相关*/

@@ -29,7 +29,8 @@ def filter_input_loadhook():
 
 
 def show_error(message, backurl='/'):
-    return web.seeother('/showerror?message=%s&backurl=%s' % (message, backurl))
+    return web.seeother('/showerror?message=%s&backurl=%s' % (message, backurl),
+                        absolute='False')
 
 
 def get_clientip():
