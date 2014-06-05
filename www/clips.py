@@ -55,7 +55,7 @@ def create_clip(title, content, cateid):
     return new_id
 
 
-def modify_clip(title, content):
+def modify_clip(id, title, content):
     db.update('clips', where="id=$id", vars=dict(id=id),
               changed_time=datetime.now(), content=content)
 
@@ -120,7 +120,7 @@ class EditHandler(object):
 
     def POST(self, id):
         i = web.input(title=u'无概要信息')
-        modify_clip(i.title, i.content)
+        modify_clip(id, i.title, i.content)
         return web.seeother('/show/%s' % id)
 
 

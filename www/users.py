@@ -71,7 +71,16 @@ class IndexHandler(object):
 
 
 class LoginHandler(object):
-    pass
+    def GET(self):
+        return render.login()
+
+    def POST(self):
+        i = web.input()
+        clientip = utils.get_clientip()
+        if verify_password(i.login_email, i.login_password, clientip):
+            return web.seeother('/')
+        else:
+            return utils.show_error(u'密码不正确')
 
 
 class RegisterHandler(object):
@@ -82,9 +91,11 @@ class RegisterHandler(object):
         i = web.input()
         clientip = utils.get_clientip()
 
+        if i.login_password != i.login_password2:
+            return utils.show_error(u'两次密码不一致')
+
         if not utils.password_strength(i.login_password):
             return utils.show_error(u'密码强度太弱')
-
 
         create_user(i.login_email, i.login_password, clientip)
         return web.seeother('/register_successful')

@@ -49,3 +49,28 @@ def test_RegisterHandler():
     assert_equal(req.headers['Location'], 'http://0.0.0.0:8080/register_successful')
     utils.password_strength.assert_called_once_with('123456')
     users.create_user.assert_called_once_with('a@a.com', '123456', '1.1.1.1')
+
+    data.login_password2 = '654321'
+    req = app.request('/register', method='POST', data=data)
+    assert_equal(req.status, '303 See Other')
+    assert req.headers['Location'].find('showerror')
+
+
+def test_LoginHandler():
+    req = app.request('/login')
+    assert_equal(req.status, '200 OK')
+
+    users.verify_password = Mock(return_value=True)
+    utils.get_clientip= Mock(return_value='1.1.1.1')
+
+    data = web.storage(login_email='a@a.com', login_password='123456')
+    req = app.request('/login', method='POST', data=data)
+
+    assert_equal(req.status, '303 See Other')
+    assert_equal(req.headers['Location'], 'http://0.0.0.0:8080/')
+    users.verify_password.assert_called_once_with('a@a.com', '123456', '1.1.1.1')
+
+    users.verify_password = Mock(return_value=True)
+    req = app.request('/login', method='POST', data=data)
+    assert_equal(req.status, '303 See Other')
+    assert req.headers['Location'].find('showerror')
