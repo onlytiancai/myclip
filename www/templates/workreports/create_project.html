@@ -1,0 +1,27 @@
+$def with()
+$var title: 创建项目 
+
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/workreport/">工作周报</a></li>
+        <li class="active">创建项目</li>
+    </ol>
+    <form role="form" method="post" action="">
+        <div class="form-group">
+            <label>项目名称</label>
+            <input type="text" class="form-control" name="name" required maxlength="20">
+        </div>
+        <div class="form-group">
+            <label>项目描述</label>
+            <textarea class="form-control" rows="20" name="description" required maxlength="1000"></textarea>
+        </div>
+        <div class="form-group">
+            <label>参与人</label>
+            <input type="text" class="form-control" name="participants" required maxlength="50">
+            <p class="help-block">多人用逗号分割</p>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a class="btn btn-default" href="/">取消</a>
+    </form>
+</div>

@@ -1,0 +1,57 @@
+$def with(summarys)
+$var title: 技术周报 
+<ol class="breadcrumb" style="margin-top:80px;">
+    <li><a href="/">首页</a></li>
+    <li class="active">工作周报</li>
+</ol>
+
+<div class="btn-group" style="margin: 15px;">
+    <a class="btn btn-default" href="/workreport/create_project">新建项目</a>
+</div>
+<div style="padding:10px;">
+<table class="table table-bordered">
+    <tr>
+        <th width="100">项目</th>
+        <th width="100">任务</th>
+        <th width="80">完成度</th>
+        <th width="80">重要性</th>
+        <th>上周进展</th>
+        <th>本周计划</th>
+        <th>问题及风险</th>
+        <th width="100">最后期限</th>
+        <th width="100">操作</th>
+        <th width="80">负责人</th>
+    </tr>
+$for project_item in summarys:
+    $ project = project_item['project']
+    $ tasks = project_item['tasks']
+    $for task_item in tasks:
+        $ task = task_item['task']
+        $ log = task_item['log']
+        <tr>
+        $if loop.first:
+            <td rowspan="$(len(tasks))" >
+                <p>$project.name</p>
+                <p><a href="/workreport/create_task/$project.id">添加任务</a></p>
+            </td>
+        <td>$task.name</td>
+        <td>$task.progress%</td>
+        <td>$task.priority</td>
+        $if log:
+            <td><pre>$log.last_week_progress</pre></td>
+            <td><pre>$log.next_week_plan</pre></td>
+            <td><pre>$log.others</pre></td>
+        $else:
+            <td>暂未填写</td>
+            <td>暂未填写</td>
+            <td>暂未填写</td>
+        <td>$task.deadline</td>
+        <td><a href="/workreport/create_task_log/$project.id/$task.id">修改进度</a> </td>
+        $if loop.first:
+            <td rowspan="$(len(tasks))" >
+            $for x in project.participants.split(','):
+                $x <br>
+            </td>
+        </tr>
+</table>
+</div>

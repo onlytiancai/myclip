@@ -58,3 +58,47 @@ create table twitters(
     deleted tinyint(1) not null,
     key(userid)
 );
+
+-- 项目
+create table projects(
+    id int auto_increment not null primary key,
+    userid int not null,
+    created_time datetime not null,
+    name varchar(128) not null,
+    participants varchar(128) not null, 
+    status int not null,
+    description text not null
+);
+
+-- 项目分解任务
+create table project_tasks(
+    id int auto_increment not null primary key,
+    project_id int not null,
+    userid int not null,
+    created_time datetime not null,
+    name varchar(64) not null,
+    description text not null,
+    progress int not null,
+    priority int not null,
+    plan_working_day int not null,
+    deadline datetime not null,
+    begin_time datetime not null,
+    done_time datetime not null,
+    state int not null,
+    key(project_id)
+);
+
+-- 项目任务日志
+create table project_logs(
+    id int auto_increment not null primary key,
+    project_id int not null,
+    task_id int not null,
+    userid int not null,
+    created_time datetime not null,
+    progress int not null,
+    last_week_progress text not null,
+    next_week_plan text not null,
+    others text not null,
+    key(project_id),
+    key(task_id)
+);

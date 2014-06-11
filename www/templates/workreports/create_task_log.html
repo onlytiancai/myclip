@@ -1,0 +1,49 @@
+$def with(project, task, log)
+$var title: 创建任务日志
+<div class="container">
+    <ol class="breadcrumb">
+        <li><a href="/">首页</a></li>
+        <li><a href="/workreport/">工作周报</a></li>
+        <li class="active">创建任务日志</li>
+    </ol>
+    <form role="form" method="post" action="">
+        <div class="form-group">
+            <label>项目名称</label>
+            <input type="text" class="form-control" name="name" readonly value="$project.name">
+        </div>
+        <div class="form-group">
+            <label>任务名称</label>
+            <input type="text" class="form-control" name="task_name"readonly value="$task.name">
+        </div>
+        <div class="form-group">
+            <label>优先级</label>
+            <input type="text" class="form-control" name="priority" readonly value="$task.priority">
+        </div>
+        <div class="form-group">
+            <label>计划工期(天)</label>
+            <input class="form-control" type="number" name="plan_working_day" readonly value="$task.plan_working_day">
+        </div>
+        <div class="form-group">
+            <label>最晚期限</label>
+            <input id="txt_deadline" type="text" class="form-control" name="deadline" readonly value="$task.deadline">
+        </div>
+        <div class="form-group">
+            <label>任务进度(%)</label>
+            <input class="form-control" type="number" name="progress" min="0" max="100" value="$task.progress">
+        </div>
+        <div class="form-group">
+            <label>本周进展</label>
+            <textarea class="form-control" rows="20" name="last_week_progress" required maxlength="1000">$log.last_week_progress</textarea>
+        </div>
+        <div class="form-group">
+            <label>下周计划</label>
+            <textarea class="form-control" rows="20" name="next_week_plan" required maxlength="1000">$log.next_week_plan</textarea>
+        </div>
+        <div class="form-group">
+            <label>问题及风险</label>
+            <textarea class="form-control" rows="20" name="others" required maxlength="1000">$log.others</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a class="btn btn-default" href="/workreport/">取消</a>
+    </form>
+</div>
