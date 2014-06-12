@@ -16,32 +16,20 @@ $var title: 创建任务日志
             <input type="text" class="form-control" name="task_name"readonly value="$task.name">
         </div>
         <div class="form-group">
-            <label>优先级</label>
-            <input type="text" class="form-control" name="priority" readonly value="$task.priority">
-        </div>
-        <div class="form-group">
-            <label>计划工期(天)</label>
-            <input class="form-control" type="number" name="plan_working_day" readonly value="$task.plan_working_day">
-        </div>
-        <div class="form-group">
-            <label>最晚期限</label>
-            <input id="txt_deadline" type="text" class="form-control" name="deadline" readonly value="$task.deadline">
-        </div>
-        <div class="form-group">
             <label>任务进度(%)</label>
             <input class="form-control" type="number" name="progress" min="0" max="100" value="$task.progress">
         </div>
         <div class="form-group">
             <label>本周进展</label>
-            <textarea class="form-control" rows="20" name="last_week_progress" required maxlength="1000">$log.last_week_progress</textarea>
+            <textarea class="form-control" rows="10" name="last_week_progress" required maxlength="1000">$(log.last_week_progress if log else '')</textarea>
         </div>
         <div class="form-group">
             <label>下周计划</label>
-            <textarea class="form-control" rows="20" name="next_week_plan" required maxlength="1000">$log.next_week_plan</textarea>
+            <textarea class="form-control" rows="10" name="next_week_plan" required maxlength="1000">$(log.next_week_plan if log else '')</textarea>
         </div>
         <div class="form-group">
             <label>问题及风险</label>
-            <textarea class="form-control" rows="20" name="others" required maxlength="1000">$log.others</textarea>
+            <textarea class="form-control" rows="10" name="others" required maxlength="1000">$(log.others if log else '')</textarea>
         </div>
         <button type="submit" class="btn btn-primary">保存</button>
         <a class="btn btn-default" href="/workreport/">取消</a>

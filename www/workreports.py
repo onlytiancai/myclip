@@ -19,6 +19,10 @@ def create_project(userid, name, participants, description):
               description=description)
 
 
+def remove_project(project_id):
+    db.delete('projects', where='id=$project_id', vars=dict(project_id=project_id))
+
+
 def create_task(project_id, userid, name, description, priority,
                 plan_working_day, deadline):
     db.insert('project_tasks', project_id=project_id, userid=userid,
@@ -26,6 +30,10 @@ def create_task(project_id, userid, name, description, priority,
               progress=0, priority=priority, plan_working_day=plan_working_day,
               deadline=deadline, begin_time=0, done_time=0,
               state=0)
+
+
+def remove_task(task_id):
+    db.delete('project_tasks', where='id=$task_id', vars=dict(task_id=task_id))
 
 
 def set_task_progress(project_id, task_id, progress):
@@ -151,10 +159,32 @@ class ReportHandler(object):
         return render.reports(summarys)
 
 
+class RemoveProjectHandler(object):
+    def GET(self, project_id):
+        project = get_project(project_id)
+        return render.remove_project(project)
+
+    def POST(self, project_id):
+        remove_project(project_id)
+        return web.seeother('/')
+
+
+class RemoveTaskHandler(object):
+    def GET(self, project_id, task_id):
+        task = get_task(task_id)
+        return render.remove_task(task)
+
+    def POST(self, project_id, task_id):
+        remove_task(task_id)
+        return web.seeother('/')
+
+
 urls = ["/", IndexHandler,
         "/create_project", CreateProjectHandler,
         "/create_task/(\d+)", CreateTaskHandler,
         "/create_task_log/(\d+)/(\d+)", CreateTaskLogHandler,
+        "/remove_task/(\d+)/(\d+)", RemoveTaskHandler,
+        "/remove_project/(\d+)", RemoveProjectHandler,
         ]
 
 
