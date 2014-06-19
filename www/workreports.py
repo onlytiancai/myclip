@@ -49,9 +49,9 @@ def begin_task(project_id, task_id):
 
 
 def done_task(project_id, task_id):
-    db.update('project_tasks', where="project_id=$project_id and task_id=$task_id",
+    db.update('project_tasks', where="project_id=$project_id and id=$task_id",
               vars=dict(project_id=project_id, task_id=task_id),
-              done_time=datetime.now())
+              done_time=datetime.now(), state=1)
 
 
 def create_tasklog(project_id, task_id, userid, progress, last_week_progress,
@@ -67,9 +67,9 @@ def get_projects():
     return db.select('projects', where='status=0', order='name')
 
 
-def get_tasks(project_id):
-    return db.select('project_tasks', where='project_id=$project_id',
-                     vars=dict(project_id=project_id), order='name')
+def get_tasks(project_id, state=0):
+    return db.select('project_tasks', where='project_id=$project_id and state=$state',
+                     vars=dict(project_id=project_id, state=state), order='name')
 
 
 def get_lastest_log(project_id, task_id):
@@ -179,11 +179,23 @@ class RemoveTaskHandler(object):
         return web.seeother('/')
 
 
+class DoneTaskHandler(object):
+    def GET(self, project_id, task_id):
+        task = get_task(task_id)
+        return render.done_task(task)
+
+    def POST(self, project_id, task_id):
+        done_task(project_id, task_id)
+        return web.seeother('/')
+
+
+
 urls = ["/", IndexHandler,
         "/create_project", CreateProjectHandler,
         "/create_task/(\d+)", CreateTaskHandler,
         "/create_task_log/(\d+)/(\d+)", CreateTaskLogHandler,
         "/remove_task/(\d+)/(\d+)", RemoveTaskHandler,
+        "/done_task/(\d+)/(\d+)", DoneTaskHandler,
         "/remove_project/(\d+)", RemoveProjectHandler,
         ]
 
